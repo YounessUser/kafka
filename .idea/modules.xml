@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cnss-domain/cnss-domain.iml" filepath="$PROJECT_DIR$/cnss-domain/cnss-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cnss-infrastructure/cnss-infrastructure.iml" filepath="$PROJECT_DIR$/cnss-infrastructure/cnss-infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cnss-presentation/cnss-presentation.iml" filepath="$PROJECT_DIR$/cnss-presentation/cnss-presentation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kafka-consumer/kafka-consumer.iml" filepath="$PROJECT_DIR$/kafka-consumer/kafka-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kafka-model/kafka-model.iml" filepath="$PROJECT_DIR$/kafka-model/kafka-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kafka-producer/kafka-producer.iml" filepath="$PROJECT_DIR$/kafka-producer/kafka-producer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent.iml" filepath="$PROJECT_DIR$/parent.iml" />
+    </modules>
+  </component>
+</project>
