@@ -3,42 +3,38 @@ package ma.cdgk.cnss.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "AnnexExchangFormat")
 public class AnnexExchangFormat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "reference")
     private String reference;
 
-    @Column(name = "label")
     private String label;
 
-    @Column(name = "startPosition")
     private int startPosition;
 
-    @Column(name = "endPosition")
     private int endPosition;
 
-    @Column(name = "length")
     private int length;
 
-    @Column(name = "type")
     private String type;
 
-    @Column(name = "comment")
     private String comment;
 
-    @Column(name = "required")
     private String required;
 
-    @Column(name = "isControl")
     private String isControl;
 
-    @Column(name = "controlType")
     private String controlType;
+
+    private String remise;
+
+    private String section;
+
+    public AnnexExchangFormat() {
+    }
 
     public AnnexExchangFormat(
             String reference,
@@ -50,7 +46,9 @@ public class AnnexExchangFormat {
             String comment,
             String required,
             String isControl,
-            String controlType
+            String controlType,
+            String remise,
+            String section
     ) {
         this.reference = reference;
         this.label = label;
@@ -62,6 +60,8 @@ public class AnnexExchangFormat {
         this.required = required;
         this.isControl = isControl;
         this.controlType = controlType;
+        this.remise = remise;
+        this.section = section;
     }
 
     public long getId() {
@@ -152,6 +152,38 @@ public class AnnexExchangFormat {
         this.controlType = controlType;
     }
 
+    public String getRequired() {
+        return required;
+    }
+
+    public String getIsControl() {
+        return isControl;
+    }
+
+    public void setIsControl(String isControl) {
+        this.isControl = isControl;
+    }
+
+    public String getControlType() {
+        return controlType;
+    }
+
+    public String getRemise() {
+        return remise;
+    }
+
+    public void setRemise(String remise) {
+        this.remise = remise;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
     @Override
     public String toString() {
         return "AnnexExchangFormat{" +
@@ -162,4 +194,5 @@ public class AnnexExchangFormat {
     }
 }
 
+    
 

@@ -1,4 +1,4 @@
-package ma.cdgk.cnss.entity.service;
+package ma.cdgk.cnss.service;
 
 import ma.cdgk.cnss.entity.AnnexExchangFormat;
 import ma.cdgk.cnss.entity.AnnexExchangFormatProvider;
@@ -15,5 +15,9 @@ public class AnnexExchangFormatService {
     public List<AnnexExchangFormat> saveAll() {
 
         return annexExchangFormatProvider.saveAll();
+    }
+    public List<AnnexExchangFormat> getAll() {
+
+        return annexExchangFormatProvider.getAll();
     }
 }

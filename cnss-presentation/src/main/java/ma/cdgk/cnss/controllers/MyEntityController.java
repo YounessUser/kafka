@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 public class MyEntityController {
 
@@ -15,9 +17,8 @@ public class MyEntityController {
     private MyService myService;
 
     @GetMapping("path")
-    public ResponseEntity listAll() throws APIErrorException {
-
-        return ResponseEntity.ok(myService.listAll());
+    public ResponseEntity listAll() throws APIErrorException, IOException {
+        return ResponseEntity.ok(myService.extractData());
 
     }
 
