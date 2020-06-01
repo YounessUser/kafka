@@ -1,5 +1,8 @@
 package ma.cdgk.cnss.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,8 +15,9 @@ public abstract class ZoneBanque {
 
     protected String sousCodeOperation;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "remise_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "remise_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected Remise remise;
 
     public ZoneBanque() {

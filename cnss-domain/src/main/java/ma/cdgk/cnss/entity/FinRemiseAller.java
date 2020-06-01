@@ -6,26 +6,27 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("FinRemiseAller")
 public class FinRemiseAller extends FinRemise{
-    private String nombreEnregistrementRemise;
-    private String nombreSousRemise;
+    private String nombreTotalOperation;
+    private String montantTotalOperation;
 
     public FinRemiseAller() {
         super();
     }
 
-    public String getNombreEnregistrementRemise() {
-        return nombreEnregistrementRemise;
+    public String getNombreTotalOperation() {
+
+        return nombreTotalOperation;
     }
 
-    public void setNombreEnregistrementRemise(String nombreEnregistrementRemise) {
-        this.nombreEnregistrementRemise = nombreEnregistrementRemise;
+    public void setNombreTotalOperation(String nombreTotalOperation) {
+        this.nombreTotalOperation = nombreTotalOperation;
     }
 
-    public String getNombreSousRemise() {
-        return nombreSousRemise;
+    public String getMontantTotalOperation() {
+        return montantTotalOperation;
     }
 
-    public void setNombreSousRemise(String nombreSousRemise) {
-        this.nombreSousRemise = nombreSousRemise;
+    public void setMontantTotalOperation(String montantTotalOperation) {
+        this.montantTotalOperation = montantTotalOperation;
     }
 }

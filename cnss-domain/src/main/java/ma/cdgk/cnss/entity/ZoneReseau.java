@@ -1,5 +1,8 @@
 package ma.cdgk.cnss.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +14,7 @@ public abstract class ZoneReseau {
     protected long id;
 
     protected String codeTypeEnregistrement;
+    protected String codeTypeOperation;
     protected String codeEtablissementParticipantEmetteur;
     protected String codeEtablissementParticipantRecepteur;
     protected String codeCompensationParticipantEmetteur;
@@ -23,10 +27,12 @@ public abstract class ZoneReseau {
     protected String codeDevise;
     protected String montantCompenseTransaction;
     protected String dateCompensation;
+    protected String dateReglement;
     protected String codeMotifRejetTechnique;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "remise_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "remise_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected Remise remise;
 
     public ZoneReseau() {
@@ -46,6 +52,14 @@ public abstract class ZoneReseau {
 
     public void setCodeTypeEnregistrement(String codeTypeEnregistrement) {
         this.codeTypeEnregistrement = codeTypeEnregistrement;
+    }
+
+    public String getCodeTypeOperation() {
+        return codeTypeOperation;
+    }
+
+    public void setCodeTypeOperation(String codeTypeOperation) {
+        this.codeTypeOperation = codeTypeOperation;
     }
 
     public String getCodeEtablissementParticipantEmetteur() {
@@ -150,6 +164,14 @@ public abstract class ZoneReseau {
 
     public void setCodeMotifRejetTechnique(String codeMotifRejetTechnique) {
         this.codeMotifRejetTechnique = codeMotifRejetTechnique;
+    }
+
+    public String getDateReglement() {
+        return dateReglement;
+    }
+
+    public void setDateReglement(String dateReglement) {
+        this.dateReglement = dateReglement;
     }
 
     public Remise getRemise() {

@@ -51,4 +51,9 @@ public class AnnexExchangFormatProviderImpl implements AnnexExchangFormatProvide
 //        list.add(new AnnexExchangFormat("B18","Zone réservée pour usage futur",101,500,400,"AN"," blancs","non","non",""));
         return annexExchangFormatRepository.saveAll(list);
     }
+
+    @Override
+    public List<AnnexExchangFormat> findByTypeRemise(String typeRemise) {
+        return annexExchangFormatRepository.findByTypeRemise(typeRemise);
+    }
 }

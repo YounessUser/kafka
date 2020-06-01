@@ -17,15 +17,6 @@ public abstract class Remise {
     protected String jourEmissionFichier;
     protected String tempsEmissionFichier;
 
-    @OneToOne(mappedBy = "remise", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    protected EnteteRemise enteteRemise;
-    @OneToOne(mappedBy = "remise", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    protected ZoneReseau zoneReseau;
-    @OneToOne(mappedBy = "remise", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    protected ZoneBanque zoneBanque;
-    @OneToOne(mappedBy = "remise", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    protected FinRemise finRemise;
-
 
     public Remise() {
     }
@@ -102,38 +93,6 @@ public abstract class Remise {
 
     public void setTempsEmissionFichier(String tempsEmissionFichier) {
         this.tempsEmissionFichier = tempsEmissionFichier;
-    }
-
-    public EnteteRemise getEnteteRemise() {
-        return enteteRemise;
-    }
-
-    public void setEnteteRemise(EnteteRemise enteteRemise) {
-        this.enteteRemise = enteteRemise;
-    }
-
-    public ZoneReseau getZoneReseau() {
-        return zoneReseau;
-    }
-
-    public void setZoneReseau(ZoneReseau zoneReseau) {
-        this.zoneReseau = zoneReseau;
-    }
-
-    public ZoneBanque getZoneBanque() {
-        return zoneBanque;
-    }
-
-    public void setZoneBanque(ZoneBanque zoneBanque) {
-        this.zoneBanque = zoneBanque;
-    }
-
-    public FinRemise getFinRemise() {
-        return finRemise;
-    }
-
-    public void setFinRemise(FinRemise finRemise) {
-        this.finRemise = finRemise;
     }
 
     @Override

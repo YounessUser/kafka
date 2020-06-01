@@ -20,4 +20,8 @@ public class AnnexExchangFormatService {
 
         return annexExchangFormatProvider.getAll();
     }
+    public List<AnnexExchangFormat> findByTypeRemise(String remise) {
+
+        return annexExchangFormatProvider.findByTypeRemise(remise);
+    }
 }

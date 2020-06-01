@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("FinCompteRenduAcquisition")
 public class FinCompteRenduAcquisition extends FinRemise {
+
     private String nombreEnregistrementRemise;
     private String nombreSousRemise;
 
