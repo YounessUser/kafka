@@ -1,7 +1,7 @@
 package ma.cdgk.cnss.helpers;
 
 import ma.cdgk.cnss.entity.*;
-import ma.cdgk.cnss.service.AnnexExchangFormatService;
+import ma.cdgk.cnss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,46 +12,66 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class RemiseAllerStrategy implements RemiseStrategy {
+public class RMALService{
 
     @Autowired
     AnnexExchangFormatService annexExchangFormatService;
+    @Autowired
+    RemiseAllerService remiseAllerService;
+    @Autowired
+    FinRemiseAllerService finRemiseAllerService;
+    @Autowired
+    EnteteRemiseAllerService enteteRemiseAllerService;
+    @Autowired
+    ZoneBanqueRemiseAllerService zoneBanqueRemiseAllerService;
+    @Autowired
+    ZoneReseauRemiseAllerService zoneReseauRemiseAllerService;
 
-    @Override
+
     public void saveRemise(String fileName, List<String> remiseContent) {
-        RemiseAller remise = getRemiseStrcture(fileName);
         List<AnnexExchangFormat> annexExchangFormats = annexExchangFormatService.findByTypeRemise("RMAL");
-        getHeaderData(
-                remise,
-                remiseContent.get(0),
-                annexExchangFormats.stream().filter(
-                        annex -> annex.getSection().equals("header")
-                ).collect(Collectors.toList())
+        RemiseAller remise = getRemiseStrcture(fileName);
+        remiseAllerService.save(remise);
+        enteteRemiseAllerService.save(
+                getHeaderData(
+                        remise,
+                        remiseContent.get(0),
+                        annexExchangFormats.stream().filter(
+                                annex -> annex.getSection().equals("header")
+                        ).collect(Collectors.toList())
+                )
         );
 
-        getZoneReseauData(
-                remise,
-                remiseContent.subList(1, remiseContent.size()-1),
-                annexExchangFormats.stream().filter(
-                        annex -> annex.getSection().equals("zoneReseau")
-                ).collect(Collectors.toList())
+        zoneReseauRemiseAllerService.saveAll(
+                getZoneReseauData(
+                        remise,
+                        remiseContent.subList(1, remiseContent.size() - 1),
+                        annexExchangFormats.stream().filter(
+                                annex -> annex.getSection().equals("zoneReseau")
+                        ).collect(Collectors.toList())
+                )
         );
 
-        getZoneBanqueData(
-                remise,
-                remiseContent.subList(1, remiseContent.size()-1),
-                annexExchangFormats.stream().filter(
-                        annex -> annex.getSection().equals("zoneBanque")
-                ).collect(Collectors.toList())
+        zoneBanqueRemiseAllerService.saveAll(
+                getZoneBanqueData(
+                        remise,
+                        remiseContent.subList(1, remiseContent.size() - 1),
+                        annexExchangFormats.stream().filter(
+                                annex -> annex.getSection().equals("zoneBanque")
+                        ).collect(Collectors.toList())
+                )
         );
 
-        getFooterData(
-                remise,
-                remiseContent.get(remiseContent.size()-1),
-                annexExchangFormats.stream().filter(
-                        annex -> annex.getSection().equals("footer")
-                ).collect(Collectors.toList())
+        finRemiseAllerService.save(
+                getFooterData(
+                        remise,
+                        remiseContent.get(remiseContent.size() - 1),
+                        annexExchangFormats.stream().filter(
+                                annex -> annex.getSection().equals("footer")
+                        ).collect(Collectors.toList())
+                )
         );
+
     }
 
     private RemiseAller getRemiseStrcture(String fileName) {
@@ -60,14 +80,14 @@ public class RemiseAllerStrategy implements RemiseStrategy {
         remiseAller.setType(fileNameData[0]);
         remiseAller.setCodeBanque(fileNameData[1]);
         remiseAller.setPeriodeDeclaration(fileNameData[2]);
-        remiseAller.setAnneeEmissionFichier(fileNameData[3]);
-        remiseAller.setMoisEmissionFichier(fileNameData[4]);
-        remiseAller.setJourEmissionFichier(fileNameData[5]);
-        remiseAller.setTempsEmissionFichier(fileNameData[6]);
+        remiseAller.setAnneeEmissionFichier(fileNameData[3].substring(0, 4));
+        remiseAller.setMoisEmissionFichier(fileNameData[3].substring(4, 6));
+        remiseAller.setJourEmissionFichier(fileNameData[3].substring(6, 8));
+        remiseAller.setTempsEmissionFichier(fileNameData[4]);
         return remiseAller;
     }
 
-    private EnteteRemiseAller getHeaderData(RemiseAller remise, String header, List<AnnexExchangFormat> list){
+    private EnteteRemiseAller getHeaderData(RemiseAller remise, String header, List<AnnexExchangFormat> list) {
         Map<String, String> map = getAnnexHasMap(header, list);
 
         EnteteRemiseAller enteteRemiseAller = new EnteteRemiseAller();
@@ -94,7 +114,7 @@ public class RemiseAllerStrategy implements RemiseStrategy {
         return enteteRemiseAller;
     }
 
-    private FinRemiseAller getFooterData(RemiseAller remise, String footer, List<AnnexExchangFormat> list){
+    private FinRemiseAller getFooterData(RemiseAller remise, String footer, List<AnnexExchangFormat> list) {
         Map<String, String> map = getAnnexHasMap(footer, list);
 
         FinRemiseAller finRemiseAller = new FinRemiseAller();
@@ -106,10 +126,10 @@ public class RemiseAllerStrategy implements RemiseStrategy {
         return finRemiseAller;
     }
 
-    private List<ZoneReseauRemiseAller> getZoneReseauData(RemiseAller remise, List<String> operations, List<AnnexExchangFormat> list){
+    private List<ZoneReseauRemiseAller> getZoneReseauData(RemiseAller remise, List<String> operations, List<AnnexExchangFormat> list) {
         List<ZoneReseauRemiseAller> avisPaiements = new ArrayList<>();
         ZoneReseauRemiseAller zoneReseauRemiseAller = null;
-        for (String operation: operations){
+        for (String operation : operations) {
             Map<String, String> map = getAnnexHasMap(operation, list);
             zoneReseauRemiseAller = new ZoneReseauRemiseAller();
             zoneReseauRemiseAller.setCodeTypeEnregistrement(map.get("A1"));
@@ -134,10 +154,10 @@ public class RemiseAllerStrategy implements RemiseStrategy {
         return avisPaiements;
     }
 
-    private List<ZoneBanqueRemiseAller> getZoneBanqueData(RemiseAller remise, List<String> operations, List<AnnexExchangFormat> list){
+    private List<ZoneBanqueRemiseAller> getZoneBanqueData(RemiseAller remise, List<String> operations, List<AnnexExchangFormat> list) {
         List<ZoneBanqueRemiseAller> avisPaiements = new ArrayList<>();
         ZoneBanqueRemiseAller zoneBanqueRemiseAller = null;
-        for (String operation: operations){
+        for (String operation : operations) {
             Map<String, String> map = getAnnexHasMap(operation, list);
             zoneBanqueRemiseAller = new ZoneBanqueRemiseAller();
             zoneBanqueRemiseAller.setSousCodeOperation(map.get("C1"));
@@ -158,10 +178,10 @@ public class RemiseAllerStrategy implements RemiseStrategy {
         return avisPaiements;
     }
 
-    private Map<String, String> getAnnexHasMap(String row, List<AnnexExchangFormat> list){
+    private Map<String, String> getAnnexHasMap(String row, List<AnnexExchangFormat> list) {
         Map<String, String> map = new HashMap<>();
-            list.stream().forEach(item -> map.put(item.getReference(),
-                row.substring(item.getStartPosition()-1, item.getEndPosition())));
+        list.stream().forEach(item -> map.put(item.getReference(),
+                row.substring(item.getStartPosition() - 1, item.getEndPosition())));
         return map;
     }
 

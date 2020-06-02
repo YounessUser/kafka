@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"ma.cdgk.cnss.entity"})
 public class CnssAPIApplication {
 
     public static void main(String[] args) {

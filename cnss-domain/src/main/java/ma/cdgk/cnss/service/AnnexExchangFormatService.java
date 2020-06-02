@@ -25,3 +25,4 @@ public class AnnexExchangFormatService {
         return annexExchangFormatProvider.findByTypeRemise(remise);
     }
 }
+

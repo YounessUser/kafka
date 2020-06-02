@@ -18,7 +18,8 @@ public class MyEntityController {
 
     @GetMapping("path")
     public ResponseEntity listAll() throws APIErrorException, IOException {
-        return ResponseEntity.ok(myService.extractData());
+        myService.extractDataFormRMAL();
+        return ResponseEntity.ok(true);
 
     }
 
